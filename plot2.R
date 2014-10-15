@@ -27,7 +27,7 @@ data2$datetime<- as.POSIXct(paste(data2$Date, data2$Time), format="%Y-%m-%d %H:%
 data2$Global_active_power<- as.numeric(as.character(data2$Global_active_power))
 
 #Plot "datetime" against Global active power 
-plot(data2$datetime, data2$Global_active_power, type="l", xlab=NULL, ylab="Global Active Power (kilowatts")
+plot(data2$datetime, data2$Global_active_power, type="l", xlab=NULL, ylab="Global Active Power (kilowatts)")
 
 #Copy the plot to a PNG file
 dev.copy(png, file="plot2.png")

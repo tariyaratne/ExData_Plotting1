@@ -22,25 +22,26 @@ data2 <- subset(data1, Date=="1/2/2007"| Date=="2/2/2007")
 data2$Date<-strptime(data2$Date, "%d/%m/%Y")
 data2$datetime<- as.POSIXct(paste(data2$Date, data2$Time), format="%Y-%m-%d %H:%M:%S")
 
-#Convert "Energy sub metering" vars to numeric var 
+#Convert the outcome vars to numeric vars
+data2$Global_active_power<- as.numeric(as.character(data2$Global_active_power))
+data2$Global_reactive_power<- as.numeric(as.character(data2$Global_reactive_power))
+data2$Voltage<- as.numeric(as.character(data2$Voltage))
 data2$Sub_metering_1 <- as.numeric(as.character(data2$Sub_metering_1))
 data2$Sub_metering_2 <- as.numeric(as.character(data2$Sub_metering_2))
 data2$Sub_metering_3 <- as.numeric(as.character(data2$Sub_metering_3))
 
-#Convert "Energy sub metering" vars to numeric var 
-data2$Sub_metering_1 <- as.numeric(as.character(data2$Sub_metering_1))
-data2$Sub_metering_2 <- as.numeric(as.character(data2$Sub_metering_2))
-data2$Sub_metering_3 <- as.numeric(as.character(data2$Sub_metering_3))
-
-#Plot "datetime" against Energy sub metering 
-par(mfrow= c(1,1), mar=c(4,4,2,1))
+#Plot "datetime" against the outcome vars
+par(mfrow= c(2,2), mar=c(4,4,2,1))
+plot(data2$datetime, data2$Global_active_power, type="l", xlab='', ylab="Global Active Power (kilowatts)")
+plot(data2$datetime, data2$Voltage, type="l", xlab="datetime", ylab="Voltage")
 plot(data2$datetime, data2$Sub_metering_1, type="l", xlab="", ylab="Energy sub meeting", col="Black")
 par(new=TRUE) 
-   plot(data2$datetime, data2$Sub_metering_2/2, ann=FALSE, axes=FALSE,type="l", col="Red")
+plot(data2$datetime, data2$Sub_metering_2/2, ann=FALSE, axes=FALSE,type="l", col="Red")
 par(new=TRUE)  
-  plot(data2$datetime, data2$Sub_metering_3, ann=FALSE, axes=FALSE,type="l", col="Blue") 
-legend("topright", pch= "-", col= c("black", "red", "blue"), legend=c("Sub_metering_1", "Sub_metering_2", "Sub_metering_3"), cex=0.5)
+plot(data2$datetime, data2$Sub_metering_3, ann=FALSE, axes=FALSE,type="l", col="Blue") 
+legend("topright", pch= "-", col= c("black", "red", "blue"), legend=c("Sub_metering_1", "Sub_metering_2", "Sub_metering_3"), cex=0.4)
+plot(data2$datetime, data2$Global_reactive_power, type="l", xlab='datetime', ylab="Global Rective Power (kilowatts)")
 
 #Copy the plot to a PNG file
-dev.copy(png, file="plot3.png")
+dev.copy(png, file="plot4.png")
 dev.off()
