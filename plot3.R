@@ -28,12 +28,19 @@ data2$Sub_metering_2 <- as.numeric(as.character(data2$Sub_metering_2))
 data2$Sub_metering_3 <- as.numeric(as.character(data2$Sub_metering_3))
 
 #Plot "datetime" against Energy sub metering 
-par(mfrow= c(1,1))
-with(data2,{  
-  plot(data2$datetime, data2$Sub_metering_1, type="l", xlab=NULL, ylab="Energy sub meeting", col="Black")
-  plot(data2$datetime, data2$Sub_metering_2, type="l", xlab=NULL, ylab="Energy sub meeting", col="Red")
-  plot(data2$datetime, data2$Sub_metering_3, type="l", xlab=NULL, ylab="Energy sub meeting", col="Blue") 
-})
+#Convert "Energy sub metering" vars to numeric var 
+data2$Sub_metering_1 <- as.numeric(as.character(data2$Sub_metering_1))
+data2$Sub_metering_2 <- as.numeric(as.character(data2$Sub_metering_2))
+data2$Sub_metering_3 <- as.numeric(as.character(data2$Sub_metering_3))
+
+#Plot "datetime" against Energy sub metering 
+par(mfrow= c(1,1), mar=c(4,4,2,1))
+plot(data2$datetime, data2$Sub_metering_1, type="l", xlab="", ylab="Energy sub meeting", col="Black")
+par(new=TRUE) 
+   plot(data2$datetime, data2$Sub_metering_2/2, ann=FALSE, axes=FALSE,type="l", col="Red")
+par(new=TRUE)  
+  plot(data2$datetime, data2$Sub_metering_3, ann=FALSE, axes=FALSE,type="l", col="Blue") 
+legend("topright", pch= "-", col= c("black", "red", "blue"), legend=c("Sub_metering_1", "Sub_metering_2", "Sub_metering_3"), cex=0.8)
 
 #Copy the plot to a PNG file
 dev.copy(png, file="plot3.png")
